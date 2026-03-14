@@ -64,6 +64,7 @@ async function fetchDetails(tmdbId: number): Promise<any | null> {
       budget:              d.budget > 0 ? d.budget : null,
       awards:              false,
       franchise:           d.belongs_to_collection?.name ?? null,
+      isCurated:           true,
     }
   } catch (err) {
     console.warn(`  ⚠ Film ${tmdbId} ignoré: ${(err as Error).message}`)
