@@ -77,32 +77,22 @@ async function main() {
 
   const allIds = new Set<number>()
 
-  // Films anglophones : vote_count ≥ 500 — large pool pour l'autocomplete
-  console.log('🇺🇸 Films anglophones (vote_count ≥ 500)...')
-  for (let page = 1; page <= 100; page++) {
-    const ids = await discoverPage('en', page, 500)
+  // Top 1500 films US (75 pages × 20)
+  console.log('🇺🇸 Top 1500 films US...')
+  for (let page = 1; page <= 75; page++) {
+    const ids = await discoverPage('en', page, 1)
     if (ids.length === 0) break
     ids.forEach(id => allIds.add(id))
     await delay(200)
   }
 
-  // Films français : vote_count ≥ 100
-  console.log('🇫🇷 Films français (vote_count ≥ 100)...')
-  for (let page = 1; page <= 20; page++) {
-    const ids = await discoverPage('fr', page, 100)
+  // Top 200 films français (10 pages × 20)
+  console.log('🇫🇷 Top 200 films français...')
+  for (let page = 1; page <= 10; page++) {
+    const ids = await discoverPage('fr', page, 1)
     if (ids.length === 0) break
     ids.forEach(id => allIds.add(id))
     await delay(200)
-  }
-
-  // Films italiens, espagnols, allemands, japonais, coréens célèbres
-  for (const [lang, pages] of [['it', 6], ['es', 6], ['de', 5], ['ja', 10], ['ko', 8], ['pt', 4], ['hi', 5], ['zh', 5]] as const) {
-    console.log(`  ${lang.toUpperCase()}...`)
-    for (let page = 1; page <= pages; page++) {
-      const ids = await discoverPage(lang, page, 300)
-      ids.forEach(id => allIds.add(id))
-      await delay(200)
-    }
   }
 
   // Classiques supplémentaires garantis (films cultes qui pourraient manquer)
