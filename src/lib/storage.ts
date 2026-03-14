@@ -11,7 +11,7 @@ export function loadGameState(): GameState | null {
     const state: GameState = JSON.parse(raw)
     if (state.date !== getTodayString()) return null
     // Compatibilité : ajouter matchingActors si absent
-    state.guesses = state.guesses.map(g => ({ matchingActors: [], ...g }))
+    state.guesses = state.guesses.map(g => ({ ...g, matchingActors: g.matchingActors ?? [] }))
     return state
   } catch {
     return null

@@ -4,7 +4,8 @@
 
 import type { Movie, Actor, GuessComparison, CellResult, MatchResult, Direction, GuessRecord } from './types'
 
-export const TMDB_IMG = 'https://image.tmdb.org/t/p/w185'
+export const TMDB_IMG    = 'https://image.tmdb.org/t/p/w185'
+export const MAX_ATTEMPTS = 8
 
 const YEAR_TOLERANCE     = 4
 const DURATION_TOLERANCE = 15
