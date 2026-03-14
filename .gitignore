@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Env (secrets)
+.env
+.env.local
+.env*.local
+
+# Database (locale dev)
+*.db
+*.db-journal
+
+# Build
+dist/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*

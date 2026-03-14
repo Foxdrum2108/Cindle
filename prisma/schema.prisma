@@ -1,0 +1,46 @@
+// Cindle - Schéma de base de données Prisma
+// SQLite pour le développement, PostgreSQL pour la production
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Table principale des films
+model Movie {
+  id         Int       @id @default(autoincrement())
+  tmdbId     Int?      @unique
+  title      String
+  year       Int
+  // SQLite ne supporte pas les tableaux natifs → on stocke en JSON stringifié
+  genres     String    // JSON: ["Action", "Drame"]
+  director            String
+  directorProfilePath String?
+  actors              String    // JSON: [{name, profilePath}]
+  country           String
+  productionCompany String?   // Société de production principale
+  language          String
+  duration   Int       // en minutes
+  rating     Float     @default(0)
+  posterUrl  String?
+  synopsis   String?
+  budget     Int?
+  awards     Boolean   @default(false)
+  franchise  String?
+  isCurated  Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+
+  dailyPicks DailyPick[]
+}
+
+// Tirage quotidien : un film par jour, le même pour tous les joueurs
+model DailyPick {
+  id      Int    @id @default(autoincrement())
+  date    String @unique // Format YYYY-MM-DD
+  movieId Int
+  movie   Movie  @relation(fields: [movieId], references: [id])
+}
