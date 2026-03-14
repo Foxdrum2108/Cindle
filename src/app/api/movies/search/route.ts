@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
     // SQLite LIKE est case-insensitive pour l'ASCII (OK pour les titres de films)
     const movies = await prisma.movie.findMany({
       where: {
-        title: { contains: q },
+        title: { contains: q, mode: 'insensitive' },
       },
       select: {
         id:        true,
